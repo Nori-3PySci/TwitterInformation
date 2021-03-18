@@ -32,18 +32,20 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit = True)
 
-index_name = ["date", "tweet", "favorite", "follow", "follower", "retweet_tw", "favorite_tw"]
-
+# +
 data = r"/path/data.csv"
 
 output_tweet = r"/path/tweet_log/" + str(timenow.strftime("%Y%m%d_%H%M%S")) + ".txt"
+
+# column_name = ["date", "tweet", "favorite", "follow", "follower", "retweet_tw", "favorite_tw"]
 
 df = pd.read_csv(data)
 
 df["date"] = pd.to_datetime(df["date"])
 
 
-# +
+# -
+
 def main():
     user = api.get_user(account)
 
@@ -81,6 +83,6 @@ def main():
     df.loc[str(len(df))] = [timenow, tweet_num, favorite_num, follow_num, follower_num, tw_retweet_num, tw_favorite_num]
 
     df.to_csv(data, index=False)
-    
+
 if __name__ == '__main__':
     main()
